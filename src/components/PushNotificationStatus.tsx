@@ -45,7 +45,7 @@ try {
             const token = await getAccessToken();
             const BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
             const res = await axios.get(
-              `${BASE_URL}api/customer-enquiries/push-notification-stats`,
+              `${BASE_URL}api/intent-push-notification-stats`,
               {
                 headers: {
                   "Content-Type": "application/json",
