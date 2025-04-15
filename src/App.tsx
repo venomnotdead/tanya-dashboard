@@ -1,8 +1,9 @@
-import { Routes, Route, Navigate, useSearchParams } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import DashboardLayout from "./layout/DashboardLayout";
 import GeoHeatmap from "./components/GeoChart";
 import LineChartWithGranularity from "./components/LineChart";
 import PieChartComponent from "./components/PiecChart";
+import PushNotificationStatus from "./components/PushNotificationStatus";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -15,7 +16,7 @@ function App() {
           <Route path="/pie-chart" element={<PieChartComponent />} />
           <Route path="/line-chart" element={<LineChartWithGranularity />} />
           <Route path="/geo-map" element={<GeoHeatmap />} />
-          {/* <Route path="/persona" element={<PersonaPage />} /> */}
+          <Route path="/push-notification" element={<PushNotificationStatus />} />
         </Routes>
       </DashboardLayout>
     </Provider>

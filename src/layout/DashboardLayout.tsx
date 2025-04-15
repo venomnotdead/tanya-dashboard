@@ -97,12 +97,12 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             <Map size={20} />
           </NavLink>
 
-          {/* <NavLink
-            to="/persona"
+          <NavLink
+            to="/push-notification"
             className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
           >
             <Files size={20} />
-          </NavLink> */}
+          </NavLink>
         </aside>
 
         {/* Main Content Area */}
