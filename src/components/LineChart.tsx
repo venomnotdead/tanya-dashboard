@@ -4,6 +4,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { getAccessToken } from "../service/auth";
 import { useSearchParams } from "react-router-dom";
+import { relationMapping } from "../utils/relationMapping";
+
 
 type Granularity = "day" | "week" | "month";
 
@@ -63,11 +65,14 @@ const LineChartWithGranularity: React.FC = () => {
   const keys = chartData.length ? Object.keys(chartData[0].counts) : [];
 
   const series = keys.map((key) => ({
-    name: key.replace(/["']/g, ""),
+    name: relationMapping[key] || key,
     type: "line" as const,
     data: chartData.map((item) => item.counts[key] || 0),
     smooth: false,
   }));
+
+  const legendData = keys.map((key) => relationMapping[key] || key);
+
 
   const option = {
     tooltip: {
@@ -75,6 +80,7 @@ const LineChartWithGranularity: React.FC = () => {
     },
     legend: {
       top: 10,
+      data: legendData,
     },
     grid: {
       left: "3%",
@@ -108,7 +114,7 @@ const LineChartWithGranularity: React.FC = () => {
           </label>
         ))}
       </div>
-      {loading ? (
+      { loading ? (
         <p>Loading chart...</p>
       ) : (
         <ReactECharts option={option} style={{ height: "400px" }} />

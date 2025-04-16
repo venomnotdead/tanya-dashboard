@@ -90,40 +90,33 @@ const GeoHeatmap: React.FC = () => {
   }, []);
 
   const getOption = () => {
-    const offset = 0.5;
-
-    const mobilePoints = data.map((loc) => ({
-      name: `${loc.city} (Mobile)`,
-      value: [
-        loc.longitude - offset,
-        loc.latitude - offset,
-        loc.platformBreakdown.mobile,
-      ],
-    }));
-
-    const webPoints = data.map((loc) => ({
-      name: `${loc.city} (Web)`,
-      value: [
-        loc.longitude + offset,
-        loc.latitude + offset,
-        loc.platformBreakdown.web,
-      ],
+    const points = data.map((loc) => ({
+      name: loc.city,
+      value: [loc.longitude, loc.latitude],
+      mobile: loc.platformBreakdown.mobile,
+      web: loc.platformBreakdown.web,
+      total: loc.platformBreakdown.mobile + loc.platformBreakdown.web,
     }));
 
     return {
       title: {
-        text: "Geo Distribution Heatmap",
         left: "center",
       },
       tooltip: {
         trigger: "item",
         formatter: (params: any) => {
-          return `${params.name}<br/>Sessions: ${params.value[2]}`;
+          return `
+            <strong>${params.name}</strong><br/>
+             Mobile: ${params.data.mobile}<br/>
+             Web: ${params.data.web}
+          `;
         },
       },
       geo: {
         map: "world",
         roam: true,
+        center: [-98, 39],
+        zoom: 3.5,
         itemStyle: {
           areaColor: "#e0e0e0",
           borderColor: "#999",
@@ -136,28 +129,20 @@ const GeoHeatmap: React.FC = () => {
       },
       series: [
         {
-          name: "Mobile",
+          name: "Sessions",
           type: "scatter",
           coordinateSystem: "geo",
-          data: mobilePoints,
-          symbolSize: (val: number[]) => Math.sqrt(val[2]) * 2,
-          itemStyle: {
-            color: "blue",
-            opacity: 0.7,
-          },
-          z: 2,
-        },
-        {
-          name: "Web",
-          type: "scatter",
-          coordinateSystem: "geo",
-          data: webPoints,
-          symbolSize: (val: number[]) => Math.sqrt(val[2]) * 2,
+          data: points,
+          symbol: "pin",
+          symbolSize: 27,
           itemStyle: {
             color: "red",
-            opacity: 0.7,
+            borderColor: "#ffffff",
+            borderWidth: 2,
           },
-          z: 1,
+          label: {
+            show: false, 
+          },
         },
       ],
     };

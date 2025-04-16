@@ -5,6 +5,7 @@ import LineChartWithGranularity from "./components/LineChart";
 import PieChartComponent from "./components/PiecChart";
 import PushNotificationStatus from "./components/PushNotificationStatus";
 import PlatformOsDistribution from "./components/PlatformOsDistribution"
+import StatCardComponent from "./components/StatCardComponent";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -13,8 +14,8 @@ function App() {
     <Provider store={store}>
       <DashboardLayout>
         <Routes>
-          <Route path="/" element={<Navigate to="/pie-chart" />} />
-          <Route path="/pie-chart" element={<PieChartComponent />} />
+        <Route path="/" element={<Navigate to="/stat-chart" />} />
+        <Route path="/stat-chart" element={<StatCardComponent />} />
           <Route path="/line-chart" element={<LineChartWithGranularity />} />
           <Route path="/geo-map" element={<GeoHeatmap />} />
           <Route path="/push-notification" element={<PushNotificationStatus />} />
