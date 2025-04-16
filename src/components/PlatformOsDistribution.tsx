@@ -73,6 +73,18 @@ const PlatformOsDistribution = () => {
 const { totalSessions} = data
 const {total, osBreakdown} = data?.platformBreakdown?.[selected]
 
+
+ let osChartData= []
+
+ if(Object.keys(osBreakdown).length === 0){
+  osChartData = osData
+ }else{
+   osChartData = Object.entries(osBreakdown).map(([name, value]) => ({
+    name,
+    value
+  }));
+ }
+
   useEffect(() => {
     getPlatFormData()
   }, [dateRange?.startDate,dateRange?.endDate ]);
@@ -152,7 +164,7 @@ const {total, osBreakdown} = data?.platformBreakdown?.[selected]
         </Stack>
         <Stack direction="row" alignItems="center" spacing={1}>
           <span className="material-symbols-outlined" style={{ color: "#1976d2" }}>laptop_mac</span>
-          <Typography variant="body1"><strong>Web:</strong> 200</Typography>
+          <Typography variant="body1"><strong>Web:</strong> {total||0}</Typography>
         </Stack>
         <Typography variant="body1" mt={1}><strong>Total Sessions:</strong> {
 totalSessions}</Typography>
@@ -181,7 +193,7 @@ totalSessions}</Typography>
           <ResponsiveContainer width="100%" height={180}>
             <PieChart>
               <Pie
-                data={osData}
+                data={osChartData}
                 dataKey="value"
                 nameKey="name"
                 innerRadius={40}
