@@ -232,7 +232,7 @@ totalSessions}</Typography>
           <ResponsiveContainer width="100%" height={180}>
           <ReactECharts option={option}  />
           </ResponsiveContainer>
-          <Stack direction="column" spacing={1} mt={6}>
+          <Stack direction="column" spacing={1} mt={8}>
           {totals > 0 ? (
   <Stack direction="column" spacing={1} mt={1}>
     {Object.entries(combinedOS).map(([osName, count]) => {
