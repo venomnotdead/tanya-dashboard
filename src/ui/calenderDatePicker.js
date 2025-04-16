@@ -11,7 +11,8 @@ const DEFAULT_END = new Date("2025-04-30");
 
 const DateRangePickerDropdown = () => {
   const dispatch = useDispatch();
-  const storedRange = useSelector((state) => state.store.store?.dateRange);
+  // const storedRange = useSelector((state) => state.store.store);
+  const storedRange = useSelector((state) => state.store.dateRange);
 
   const initialStart = storedRange?.startDate ? new Date(storedRange.startDate) : DEFAULT_START;
   const initialEnd = storedRange?.endDate ? new Date(storedRange.endDate) : DEFAULT_END;
@@ -37,12 +38,10 @@ const DateRangePickerDropdown = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [storedRange]);
 
-  // ✅ Handles both updating range AND closing on end date selection
+
   const handleDateChange = (update) => {
-    console.log(update)
     setTempRange(update);
     if (update[0] && update[1]) {
-      console.log('&&&&&',format(update[0], "yyyy-MM-dd"))
       dispatch(
         setDateRange({
           startDate: format(update[0], "yyyy-MM-dd"),

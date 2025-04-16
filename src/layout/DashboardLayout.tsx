@@ -14,13 +14,16 @@ import {
 import "./DashboardLayout.css";
 import { NavLink, useSearchParams } from "react-router-dom";
 import { getTheme } from "../service/theme";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchStoreConfig } from "../service/api";
 import { setStore } from "../store/reducer/storeReducer";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
 import DateRangePickerDropdown from "../ui/calenderDatePicker";
+import { fetchStoreAssets } from "../store/reducer/cmsReducer";
+import type { AppDispatch } from "../store";
+import { RootState } from "../store";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -29,44 +32,40 @@ interface DashboardLayoutProps {
 const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
   // const [activeSeason, setActiveSeason] = useState("All Seasons");
   // const [activeTimeframe, setActiveTimeframe] = useState("6 Months");
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch()
   const [searchParams] = useSearchParams();
-  const [loading, setLoading] = useState(true);
-  const [theme, setTheme] = useState<any>({});
 
-  const getThemeFunc = async () => {
-    const themeData = await getTheme("claires");
-    setTheme(themeData);
-    setLoading(false);
-  };
+  const cms = useSelector(
+    (state: RootState) => state.cmsImage
+  );
+  const store = useSelector(
+    (state: RootState) => state.store
+  );
+
 
   useEffect(() => {
     const storeCodeFromParams = searchParams.get("storeCode");
     const storeCode = storeCodeFromParams || localStorage.getItem("storeCode");
 
     if (storeCode) {
+      dispatch(fetchStoreAssets(storeCode));
+
       localStorage.setItem("storeCode", storeCode); // Optional: keep it in sync
       fetchStoreConfig(storeCode).then((res) => {
-        console.log("********", res);
         dispatch(setStore({ ...res, storeCode }));
       });
     }
-    getThemeFunc();
   }, [searchParams, dispatch]);
 
   return (
     <div>
       <div
         className="dashboard-header"
-        style={{ backgroundColor: theme?.themeColor || "#553D94" }}
+        style={{ backgroundColor: store?.store?.themeColor || "#553D94" }}
       >
         <div>
           <div>
-            {theme?.logoTransparent ? (
-              <img src={theme?.logoTransparent} alt="Logo" className="logo" />
-            ) : (
-              <div className="logo-text">claire's</div>
-            )}
+            <img src={cms?.logo || ""} alt="Logo" className="logo" />
           </div>
         </div>
       </div>
@@ -77,7 +76,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             <div className="logo">claire's</div>
           </div> */}
           <NavLink
-            to="/pie-chart"
+             to="/stat-chart"
             className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
           >
             <ChartPie size={20} />
@@ -142,7 +141,7 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
             </div>
           </header>
 
-          {loading ? (
+          {cms?.loading ? (
             <div className="loading-container">
               <div className="loading-spinner"></div>
             </div>
