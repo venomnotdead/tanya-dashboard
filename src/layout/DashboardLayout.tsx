@@ -103,6 +103,12 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
           >
             <Files size={20} />
           </NavLink>
+          <NavLink
+            to="/platform-os-distribution"
+            className={({ isActive }) => `nav-link ${isActive ? "active" : ""}`}
+          >
+            <CircleDashed size={20} />
+          </NavLink>
         </aside>
 
         {/* Main Content Area */}

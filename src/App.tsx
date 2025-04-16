@@ -4,6 +4,7 @@ import GeoHeatmap from "./components/GeoChart";
 import LineChartWithGranularity from "./components/LineChart";
 import PieChartComponent from "./components/PiecChart";
 import PushNotificationStatus from "./components/PushNotificationStatus";
+import PlatformOsDistribution from "./components/PlatformOsDistribution"
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -17,6 +18,7 @@ function App() {
           <Route path="/line-chart" element={<LineChartWithGranularity />} />
           <Route path="/geo-map" element={<GeoHeatmap />} />
           <Route path="/push-notification" element={<PushNotificationStatus />} />
+          <Route path="/platform-os-distribution" element={<PlatformOsDistribution />} />
         </Routes>
       </DashboardLayout>
     </Provider>
