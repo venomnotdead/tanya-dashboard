@@ -62,7 +62,7 @@ try {
               throw new Error('Failed to fetch');
             }
             
-  setData( res.data)
+ setData( res.data)
 }catch(e){
      console.log(e)
 }finally{
@@ -70,7 +70,7 @@ try {
 }
 
   }
-  const notificationOptions = {
+  const notificationOptionzs = {
     tooltip: { trigger: "item" },
     legend: { bottom: 0 },
     series: [
@@ -93,6 +93,37 @@ try {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
+ const option =    {
+    tooltip: {
+      trigger: "item",
+      formatter: "{b}: {c} ({d}%)",
+    },
+    legend: {
+      show: true,
+    },
+    series: [
+      {
+        name: "Queries",
+        type: "pie",
+        radius: "65%",
+        data: [
+          { value: enabled, name: "Enabled", itemStyle: { color: "#2b9eff" } },
+          { value: disabled, name: "Disabled", itemStyle: { color: "#fba834" } },
+        ],
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowOffsetX: 0,
+            shadowColor: "rgba(0, 0, 0, 0.5)",
+          },
+        },
+        label: {
+          fontSize: 14,
+          formatter: "{b} ({c}, {d}%)",
+        },
+      },
+    ],
+  };
 
   return (
     <div className="grid md:grid-cols-2 gap-6 max-w-7xl mx-auto p-4">
@@ -104,11 +135,10 @@ try {
           Total Mobile Users: {totalMobileUsers}
         </p>
         <div className="w-full h-[200px]">
-          <ReactECharts option={notificationOptions} style={{ height: 200 }} />
+        <ReactECharts option={option} style={{ height: "300px", width: "85%" }} />
         </div>
-      
         <p className="text-center mt-4 text-gray-700 text-center">
-          {notificationsReceivedInPeriod} notifications received in period
+          {notificationsReceivedInPeriod} notifications received in the chosen period
         </p>
       </div>
     </div>
