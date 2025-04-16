@@ -8,7 +8,7 @@ import { getAccessToken } from "../service/auth";
 
 interface PushNotificationStats {
   "totalMobileUsers": number,
-  "pushNotificationStats": {
+  "mobilePushNotificationStats": {
       "enabled": number,
       "disabled": number,
       "notificationsReceivedInPeriod": number
@@ -17,7 +17,7 @@ interface PushNotificationStats {
 
 const sampleData ={
   "totalMobileUsers": 0,
-  "pushNotificationStats": {
+  "mobilePushNotificationStats": {
       "enabled": 0,
       "disabled": 0,
       "notificationsReceivedInPeriod": 0
@@ -33,7 +33,7 @@ const PushNotificationStatus: React.FC = () => {
   const storeCodeFromParams = searchParams.get("storeCode");
   const storeCode = storeCodeFromParams || localStorage.getItem("storeCode");
 
-  const {totalMobileUsers , pushNotificationStats :{disabled, enabled, notificationsReceivedInPeriod }} = data
+  const {totalMobileUsers , mobilePushNotificationStats :{disabled, enabled, notificationsReceivedInPeriod }} = data
 
   useEffect(() => {
     getPushNoticationData()
@@ -70,26 +70,6 @@ try {
 }
 
   }
-  const notificationOptionzs = {
-    tooltip: { trigger: "item" },
-    legend: { bottom: 0 },
-    series: [
-      {
-        type: "pie",
-        radius: ["60%", "80%"],
-        avoidLabelOverlap: false,
-        label: { show: false },
-        emphasis: {
-          label: { show: true, fontSize: 16, fontWeight: "bold" },
-        },
-        labelLine: { show: false },
-        data: [
-          { value:  enabled, name: "Enabled", itemStyle: { color: "#2b9eff" } },
-          { value: disabled, name: "Disabled", itemStyle: { color: "#fba834" } },
-        ],
-      },
-    ],
-  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
