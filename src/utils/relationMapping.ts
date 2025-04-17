@@ -4,6 +4,6 @@ export const relationMapping: { [key: string]: string } = {
   "his/her grandchild": "Grand Children",
   "his/her niece/nephew": "Niece/Nephew",
   "his/her friends": "Friends",
-  "other": "Others",
-  undisclosed: "Undisclosed"
+  others: "Others",
+  undisclosed: "Undisclosed",
 };
